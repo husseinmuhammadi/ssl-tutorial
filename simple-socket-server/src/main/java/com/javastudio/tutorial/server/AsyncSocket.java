@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 public class AsyncSocket extends Thread {
-    private ServerSocket serverSocket;
+    private final ServerSocket serverSocket;
 
     public AsyncSocket(int port) throws IOException {
         serverSocket = new ServerSocket(port);
