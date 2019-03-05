@@ -15,8 +15,13 @@
 
     <modules>
 
-        <module>../simple-socket-client</module>
-        <module>../simple-socket-server</module>
+        <!--<module>../simple-socket-client</module>-->
+        <!--<module>../simple-socket-server</module>-->
+
+        <module>../ssl-socket-client</module>
+        <!--<module>../ssl-socket-server</module>-->
+
+        <!--<module>../ssl-socket-server-2</module>-->
 
     </modules>
 </project>
