@@ -2,7 +2,6 @@ package com.javastudio.tutorial;
 
 import javax.net.ssl.*;
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.security.*;
@@ -55,16 +54,18 @@ public class Server {
             serverSocket.setWantClientAuth(false);
             serverSocket.setNeedClientAuth(false);
 
-            Socket socket = serverSocket.accept();
+            while (true) {
+                Socket socket = serverSocket.accept();
 
-            System.out.println("Just connected to " + socket.getRemoteSocketAddress());
-            DataInputStream in = new DataInputStream(socket.getInputStream());
+                System.out.println("Just connected to " + socket.getRemoteSocketAddress());
+                DataInputStream in = new DataInputStream(socket.getInputStream());
 
-            System.out.println(in.readUTF());
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            out.writeUTF("Thank you for connecting to " + socket.getLocalSocketAddress()
-                    + "\nGoodbye!");
-            socket.close();
+                System.out.println(in.readUTF());
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                out.writeUTF("Thank you for connecting to " + socket.getLocalSocketAddress()
+                        + "\nGoodbye!");
+                socket.close();
+            }
 
         } catch (SocketTimeoutException s) {
             System.out.println("Socket timed out!");
