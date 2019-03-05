@@ -5,9 +5,12 @@ import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.security.Security;
 
 public class Client {
     public static void main(String[] args) {
+        Security.setProperty("jdk.tls.disabledAlgorithms", "");
+        Security.setProperty("force.http.jre.executor", "true");
         System.setProperty("javax.net.ssl.trustStore", "keystore.jks");
         System.setProperty("javax.net.ssl.trustStorePassword", "123456");
         System.setProperty("javax.net.ssl.keyStore", "keystore.jks");
@@ -21,15 +24,17 @@ public class Client {
         if (args != null && args.length > 1)
             port = Integer.parseInt(args[1]);
 
+        Socket socket = null;
+
         try {
             System.out.println("Connecting to " + host + " on port " + port);
-            Socket socket = new Socket(host, port);
+
             socket = SSLSocketFactory.getDefault().createSocket();
             socket.setKeepAlive(true);
             socket.setSoLinger(true, 0);
             socket.setReuseAddress(true);
             socket.setTcpNoDelay(true);
-            socket.bind(new InetSocketAddress(new InetSocketAddress(port).getAddress(), port));
+            // socket.bind(new InetSocketAddress(new InetSocketAddress(port).getAddress(), port));
             socket.connect(new InetSocketAddress(host, port));
             ((SSLSocket) socket).setEnabledProtocols(new String[]{"TLSv1.2"});
             ((SSLSocket) socket).startHandshake();
@@ -49,9 +54,15 @@ public class Client {
             DataInputStream in = new DataInputStream(inFromServer);
 
             System.out.println("Server says " + in.readUTF());
-            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (socket != null)
+                    socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
