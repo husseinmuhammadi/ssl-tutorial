@@ -47,7 +47,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib</classpathPrefix>
-                            <mainClass>com.javastudio.tutorial.Startup</mainClass>
+                            <mainClass>com.javastudio.tutorial.Server</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

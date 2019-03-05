@@ -110,7 +110,7 @@ public class WebInterfaceSSL extends WebInterface {
         System.out.println(f.getAbsolutePath());
         System.setProperty("javax.net.ssl.trustStore", f.getAbsolutePath());
 
-        sslServerSocketFactory = makeSSLSocketFactory(f.getAbsolutePath(), "csc1009".toCharArray());
+        sslServerSocketFactory = makeSSLSocketFactory(f.getAbsolutePath(), "123456".toCharArray());
 
         try {
             final ServerSocket ss = createSocket();
